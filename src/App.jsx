@@ -6,6 +6,7 @@ import LoginSignup from './Pages/LoginSignup'
 import Cart from './Pages/Cart'
 import ShopCategory from './Pages/ShopCategory'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Footer from './Components/Footer'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -24,6 +25,7 @@ function App() {
             {/* <Route path="/product" element={<Product />} />
             <Route path=":productId" element={<Product />} /> */}
         </Routes>
+        <Footer />
     </BrowserRouter>
 
     </>
