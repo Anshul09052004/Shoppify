@@ -38,6 +38,7 @@ function ShopCategory(props) {
             if (props.category===item.category) {
               return  <Item
               id={item.id}
+               key={item.id}  
               name={item.name}
               image={item.image}
               newprice={item.new_price}

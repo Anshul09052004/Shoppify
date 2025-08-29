@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 function item(props) {
     const [tilt, setTilt] = React.useState({ x: 0, y: 0 });
 
@@ -18,9 +19,10 @@ function item(props) {
             onMouseLeave={() => setTilt({ x: 0, y: 0 })}
             style={{ transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)` }}
         >
-            <img src={props.image}
+            <Link to={`/product/${props.id}`}> <img src={props.image}
                 alt="Product Image" className="w-full h-52 object-cover"
-            />
+            /></Link>
+
             <p className="mt-3 px-4 pt-3 mb-1 text-lg font-semibold text-gray-800">
                 {props.name}
             </p>
