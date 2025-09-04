@@ -1,0 +1,44 @@
+# Node modules (bahut heavy hote hain, commit nahi karna chahiye)
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files (credentials, Mongo URI, API keys)
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# Build / dist files
+dist/
+build/
+
+# Coverage reports
+coverage/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE settings
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+
+# Uploaded files (agar local me rakhta hai to)
+uploads/
+
+# Debug / lock files
+*.pid
+*.seed
+*.pid.lock
