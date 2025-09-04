@@ -9,7 +9,7 @@ cloudinary.v2.config({
 })
 
 dotenv.config();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
     console.log(`http://localhost:${process.env.PORT}`)
 })
