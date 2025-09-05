@@ -1,13 +1,53 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import logo from "../assets/Assets/Frontend_Assets/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import carticon from "../assets/Assets/Frontend_Assets/cart_icon.png";
 import { IoMdMenu, IoMdClose } from "react-icons/io";
 import { ShopContext } from "../Context/ShopContext";
+import { toast } from "react-toastify";
 
 function Navbar() {
   const [open, setOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { getTotalCartItems } = useContext(ShopContext);
+  const navigate = useNavigate();
+
+  // ✅ check login status on mount
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token);
+
+    // ✅ show logout message (if any)
+    const msg = localStorage.getItem("logoutMessage");
+    if (msg) {
+      toast.success(msg);
+      localStorage.removeItem("logoutMessage");
+    }
+
+    // ✅ listen for storage changes (login/logout update turant)
+    const syncLoginState = () => {
+      setIsLoggedIn(!!localStorage.getItem("token"));
+    };
+    window.addEventListener("storage", syncLoginState);
+
+    return () => {
+      window.removeEventListener("storage", syncLoginState);
+    };
+  }, []);
+
+  // ✅ handle logout
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    setOpen(false);
+
+    localStorage.setItem("logoutMessage", "Logged out successfully ✅");
+
+    // 👇 turant Navbar ko update karo
+    window.dispatchEvent(new Event("storage"));
+
+    navigate("/shop");
+  };
 
   return (
     <nav className="sticky top-0 z-50 flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-3 border-b border-gray-300 bg-white transition-all">
@@ -19,16 +59,25 @@ function Navbar() {
 
       {/* Desktop Menu */}
       <div className="hidden sm:flex items-center gap-8">
-        <Link to="/">Shop</Link>
+        <Link to="/shop">Shop</Link>
         <Link to="/mens">Men</Link>
         <Link to="/women">Women</Link>
         <Link to="/kids">Kids</Link>
 
-        <Link to="/login">
-          <button className="cursor-pointer px-6 py-2 bg-indigo-500 hover:bg-indigo-600 transition text-white rounded-full">
-            Login
+        {isLoggedIn ? (
+          <button
+            onClick={handleLogout}
+            className="cursor-pointer px-6 py-2 bg-red-500 hover:bg-red-600 transition text-white rounded-full"
+          >
+            Logout
           </button>
-        </Link>
+        ) : (
+          <Link to="/login">
+            <button className="cursor-pointer px-6 py-2 bg-indigo-500 hover:bg-indigo-600 transition text-white rounded-full">
+              Login
+            </button>
+          </Link>
+        )}
 
         {/* Desktop Cart Icon */}
         <Link to="/cart">
@@ -43,7 +92,6 @@ function Navbar() {
 
       {/* Mobile Cart + Menu Toggle */}
       <div className="flex items-center gap-4 sm:hidden">
-        {/* Mobile Cart Icon */}
         <Link to="/cart">
           <div className="relative cursor-pointer">
             <img src={carticon} alt="carticon" className="w-6 h-6" />
@@ -52,8 +100,6 @@ function Navbar() {
             </span>
           </div>
         </Link>
-
-        {/* Menu Toggle */}
         <button
           onClick={() => setOpen(!open)}
           aria-label="Menu"
@@ -64,29 +110,58 @@ function Navbar() {
       </div>
 
       {/* Mobile Menu */}
+      {/* Mobile Menu */}
       <div
-        className={`absolute top-[60px] left-0 w-full bg-white shadow-md flex-col items-start gap-3 px-5 py-5 text-sm font-medium transition-all duration-300 ${
-          open ? "flex opacity-100 translate-y-0" : "opacity-0 -translate-y-3 hidden"
-        }`}
+        className={`absolute top-[60px] left-0 w-full bg-white shadow-lg rounded-b-2xl flex-col items-start gap-4 px-6 py-6 text-base font-medium transition-all duration-300 sm:hidden ${open
+            ? "flex opacity-100 translate-y-0"
+            : "opacity-0 -translate-y-3 pointer-events-none"
+          }`}
       >
-        <Link to="/" className="block" onClick={() => setOpen(false)}>
+        <Link
+          to="/shop"
+          className="block w-full py-2 border-b border-gray-200"
+          onClick={() => setOpen(false)}
+        >
           Shop
         </Link>
-        <Link to="/mens" className="block" onClick={() => setOpen(false)}>
+        <Link
+          to="/mens"
+          className="block w-full py-2 border-b border-gray-200"
+          onClick={() => setOpen(false)}
+        >
           Men
         </Link>
-        <Link to="/women" className="block" onClick={() => setOpen(false)}>
+        <Link
+          to="/women"
+          className="block w-full py-2 border-b border-gray-200"
+          onClick={() => setOpen(false)}
+        >
           Women
         </Link>
-        <Link to="/kids" className="block" onClick={() => setOpen(false)}>
+        <Link
+          to="/kids"
+          className="block w-full py-2 border-b border-gray-200"
+          onClick={() => setOpen(false)}
+        >
           Kids
         </Link>
-        <Link to="/login" onClick={() => setOpen(false)}>
-          <button className="cursor-pointer px-5 py-2 mt-2 bg-indigo-500 hover:bg-indigo-600 transition text-white rounded-full text-sm">
-            Login
+
+        {isLoggedIn ? (
+          <button
+            onClick={handleLogout}
+            className="w-full mt-4 px-5 py-2 bg-red-500 hover:bg-red-600 transition text-white rounded-full text-sm"
+          >
+            Logout
           </button>
-        </Link>
+        ) : (
+          <Link to="/login" onClick={() => setOpen(false)} className="w-full">
+            <button className="w-full mt-4 px-5 py-2 bg-indigo-500 hover:bg-indigo-600 transition text-white rounded-full text-sm">
+              Login
+            </button>
+          </Link>
+        )}
       </div>
+
     </nav>
   );
 }

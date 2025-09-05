@@ -3,6 +3,7 @@ import Offer from "../Components/Offer";
 import Popular from "../Components/Popular";
 
 function Shop() {
+
   return (
     <div className="w-full bg-gray-50 text-gray-900">
       {/* Hero Section */}
