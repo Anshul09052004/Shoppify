@@ -13,8 +13,9 @@ app.use(cookieParser());
 
 // ✅ CORS fix
 app.use(cors({
-  origin: "http://localhost:5173",
-  credentials: true,
+  origin: ["http://localhost:5173", "https://shoppify-app.vercel.app"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
 }));
 
 app.use(express.urlencoded({ extended: true }));
