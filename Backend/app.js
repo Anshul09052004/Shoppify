@@ -13,7 +13,7 @@ app.use(cookieParser());
 
 // ✅ CORS fix
 app.use(cors({
-  origin: "http://localhost:5173/shop",
+  origin: "http://localhost:5173",
   credentials: true,
 }));
 
