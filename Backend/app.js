@@ -19,8 +19,8 @@ app.use(cors({
 
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/home', (req, res) => {
-  res.send("server running");
+app.get('/', (req, res) => {
+  res.send("server running successfully");
 });
 
 app.use('/api/v1/user', userRoutes);
