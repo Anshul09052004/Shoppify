@@ -23,34 +23,32 @@ function LoginSignup() {
   // ✅ Signup
   const SignUp = async (e) => {
     e.preventDefault();
-    try {
-      const response = await fetch(`${API_URL}/api/v1/user/signup`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
 
-      const data = await response.json();
+    const response = await fetch(`${API_URL}/api/v1/user/signup`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
 
-      if (!response.ok) {
-        toast.error(data.message || "Signup failed");
-        return;
-      }
+    const data = await response.json();
 
-      toast.success("Signup Successful!");
-      setTimeout(() => {
-        setState("Login");
-        navigate("/login");
-      }, 1500);
-    } catch (error) {
-      console.error(error);
+    if (!response.ok) {
+      toast.error(data.message || "Signup failed");
+      return;
     }
+
+    toast.success("Signup Successful!");
+    setTimeout(() => {
+      setState("Login");
+      navigate("/login");
+    }, 1500);
+
   };
 
   // ✅ Login
   const Login = async (e) => {
     e.preventDefault();
-    try {
+    {
       const response = await fetch(`${API_URL}/api/v1/user/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -72,8 +70,6 @@ function LoginSignup() {
       }
 
       setTimeout(() => navigate("/shop"), 1500);
-    } catch (error) {
-      console.error(error);
     }
   };
 
