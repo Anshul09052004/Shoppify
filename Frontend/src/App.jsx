@@ -12,6 +12,7 @@ import banner_kids from "./assets/Assets/Frontend_Assets/banner_kids.png";
 import banner_women from "./assets/Assets/Frontend_Assets/banner_women.png";
 import banner_mens from "./assets/Assets/Frontend_Assets/banner_mens.png";
 import Product from "./Pages/Product";
+import { useLocation } from "react-router-dom";
 
 function App() {
   const [token, setToken] = useState(null);
@@ -38,7 +39,7 @@ function App() {
           <Route path="/kids" element={<ShopCategory category="kid" banner={banner_kids} />} />
           <Route path="/product/:id" element={<Product />} />
         </Routes>
-        {!["/login"].includes(location.pathname) && <Footer />}
+          {location.pathname !== "/login" && <Footer />}
       </BrowserRouter>
     </ShopContextProvider>
   );
