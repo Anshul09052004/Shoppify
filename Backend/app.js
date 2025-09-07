@@ -13,7 +13,7 @@ app.use(cookieParser());
 
 // ✅ CORS fix
 app.use(cors({
-  origin: ["http://localhost:5173", "https://shoppify-app.vercel.app"],
+  origin: ["https://shoppify-app.vercel.app"], 
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));

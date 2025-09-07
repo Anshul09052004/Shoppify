@@ -11,6 +11,7 @@ function LoginSignup() {
     email: "",
     password: "",
   });
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const changeHandler = (e) => {
     setFormData({
@@ -23,7 +24,7 @@ function LoginSignup() {
   const SignUp = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/api/v1/user/register", {
+      const response = await fetch(`${API_URL}/api/v1/user/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -42,7 +43,7 @@ function LoginSignup() {
         navigate("/login");
       }, 1500);
     } catch (error) {
-      toast.error("Network error during signup");
+      console.error(error);
     }
   };
 
@@ -50,7 +51,7 @@ function LoginSignup() {
   const Login = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/api/v1/user/login", {
+      const response = await fetch(`${API_URL}/api/v1/user/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
