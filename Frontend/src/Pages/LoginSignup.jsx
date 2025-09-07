@@ -72,7 +72,7 @@ function LoginSignup() {
 
       setTimeout(() => navigate("/shop"), 1500);
     } catch (error) {
-      toast.error("Network error during login");
+      console.error(error);
     }
   };
 
